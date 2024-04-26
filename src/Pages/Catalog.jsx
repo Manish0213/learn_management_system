@@ -43,8 +43,8 @@ const Catalog = () => {
     }, [categoryId]);
 
   return (
-    <div className='text-richblack-5 box-content px-4 bg-richblack-800  '>
-        <div className='mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent'>
+    <div className='text-richblack-5 box-content bg-richblack-800  '>
+        <div className='mx-auto flex px-2 lg:px-0 min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent'>
             <p className='text-richblack-300 text-sm'>{`Home / Catalog /`} <span className='text-yellow-25'>{catalogPageData?.data?.selectedCategory?.name}</span></p>
             <p className='text-richblack-5 text-4xl'>{catalogPageData?.data?.selectedCategory?.name}</p>
             <p className='text-richblack-200 max-w-[870px]'>{catalogPageData?.data?.selectedCategory?.description}</p>
@@ -52,7 +52,7 @@ const Catalog = () => {
 
         <div className='bg-richblack-900 '>
             {/* SECTION 1 */}
-            <div className='mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
+            <div className='mx-auto box-content lg:w-11/12 max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
                 <div className=' text-4xl font-bold text-richblack-25'>Courses to get you started</div>
                 <div  className="my-4 flex border-b border-b-richblack-600 text-base">
                     <p className={`px-4 py-2 ${active === 1 ? 'border-b border-b-yellow-25 text-yellow-25' : 'text-richblack-50'} cursor-pointer`} 
@@ -66,7 +66,7 @@ const Catalog = () => {
             </div>
 
             {/* SECTION 2 */}
-            <div  className=" mx-auto box-content lg:w-11/12 max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
+            <div  className=" mx-auto box-content  max-w-maxContentTab px-4 py-12 lg:max-w-maxContent">
                 <div className='text-4xl font-bold text-richblack-25'>Top Courses in {catalogPageData?.data?.differentCategory?.name}</div>
                 <div className='py-8'>
                     <CourseSlider Courses={catalogPageData?.data?.differentCategory?.courses} />
@@ -74,7 +74,7 @@ const Catalog = () => {
             </div>
 
             {/* SECTION 3 */}
-            <div className='lg:w-11/12 mx-auto box-content w-full max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
+            <div className=' mx-auto box-content max-w-maxContentTab px-4 py-12 lg:max-w-maxContent'>
                 <div className='text-4xl font-bold text-richblack-25'>Frequently Bought</div>
                 <div className='py-8'>
                     <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>

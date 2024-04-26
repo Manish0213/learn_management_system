@@ -16,6 +16,9 @@ import ConfirmationModal from "../components/common/ConfirmationModal"
 import Accordion from "../components/core/Course/Accordion"
 import { formatDate } from "../services/formDate"
 import { buyCourse } from "../services/operations/paymentAPI"
+import { ACCOUNT_TYPE } from "../utils/constants"
+import toast from "react-hot-toast"
+import { addToCart } from "../slices/cartSlice"
 
 function Course() {
   const { user } = useSelector((state) => state.profile)
@@ -99,6 +102,8 @@ function Course() {
     createdAt,
   } = response.data.courseDetails
 
+  let course=response?.data?.courseDetails
+
   const handleBuyCourse = () => {
     if (token) {
         buyCourse(token, [courseId], user, navigate, dispatch)
@@ -123,11 +128,31 @@ function Course() {
     )
   }
 
+  const handleAddToCart = () => {
+    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("You are an Instructor. You can't buy a course.")
+      return
+    }
+    if (token) {
+      dispatch(addToCart(course))
+      localStorage.setItem(("cart"))
+      return
+    }
+    setConfirmationModal({
+      text1: "You are not logged in!",
+      text2: "Please login to add To Cart",
+      btn1Text: "Login",
+      btn2Text: "Cancel",
+      btn1Handler: () => navigate("/login"),
+      btn2Handler: () => setConfirmationModal(null),
+    })
+  }
+ 
   return (
     <>
       <div className={`relative w-full bg-richblack-800`}>
         {/* Hero Section */}
-        <div className="mx-auto box-content px-4 lg:w-11/12 lg:flex lg:justify-between  lg:relative ">
+        <div className="mx-auto box-content px-4 lg:w-[1260px] lg:flex lg:justify-between  lg:relative ">
           <div className="mx-auto grid min-h-[450px] max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[680px]">
             <div className="relative block max-h-[30rem] lg:hidden">
               <div className="absolute bottom-0 left-0 h-full w-full shadow-[#161D29_0px_-64px_36px_-28px_inset]"></div>
@@ -172,10 +197,23 @@ function Course() {
               <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">
                 Rs. {price}
               </p>
-              <button className="yellowButton" onClick={handleBuyCourse}>
-                Buy Now
+              <button
+              className="yellowButton"
+              onClick={
+                user && course?.studentsEnrolled.includes(user?._id)
+                  ? () => navigate("/dashboard/enrolled-courses")
+                  : handleBuyCourse
+              }
+              >
+              {user && course?.studentsEnrolled.includes(user?._id)
+                ? "Go To Course"
+                : "Buy Now"}
               </button>
-              <button className="blackButton">Add to Cart</button>
+              {(!user || !course?.studentsEnrolled.includes(user?._id)) && (
+                <button onClick={handleAddToCart} className="blackButton">
+                  Add to Cart
+                </button>
+              )}
             </div>
           </div>
           {/* Courses Card */}
@@ -188,7 +226,7 @@ function Course() {
           </div>
         </div>
       </div>
-      <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-11/12">
+      <div className="mx-auto box-content px-4 text-start text-richblack-5 lg:w-[1260px]">
         <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[670px]">
           {/* What will you learn section */}
           <div className="my-8 border border-richblack-600 p-8">
@@ -241,8 +279,8 @@ function Course() {
               <div className="flex items-center gap-4 py-4">
                 <img
                   src={
-                    instructor.image
-                      ? instructor.image
+                    instructor.images
+                      ? instructor.images
                       : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
                   }
                   alt="Author"

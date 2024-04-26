@@ -6,7 +6,7 @@ import { AiOutlineCaretDown } from 'react-icons/ai';
 import { VscDashboard, VscSignOut } from "react-icons/vsc"
 import { logout } from '../../../services/operations/authAPI';
 import { ACCOUNT_TYPE } from '../../../utils/constants';
-import { CgProfile } from "react-icons/cg";
+import { MdChecklistRtl } from "react-icons/md";
 import { TiInputChecked } from "react-icons/ti";
 import { IoMdSettings } from "react-icons/io";
 import { MdCallMade } from "react-icons/md";
@@ -55,6 +55,13 @@ export const ProfileDropDown = () => {
                        courses
                     </div>
                   </Link>
+
+                  <Link to="/catalog/web-development" onClick={() => setOpen(false)}>
+                        <div className='flex w-full items-center font-semibold font-inter gap-x-2 py-[10px] px-[12px] text-sm text-richblack-100 border-[1px] border-richblack-700 hover:bg-richblack-700 hover:text-richblack-25'>
+                            <MdChecklistRtl className='text-lg'/>
+                            Catalog
+                        </div>
+                    </Link>
 
                   <Link to="/dashboard/settings" onClick={() => setOpen(false)}>
                     <div className='flex w-full items-center font-semibold font-inter gap-x-2 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25'>
