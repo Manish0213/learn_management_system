@@ -22,24 +22,18 @@ const Navbar = () => {
     const [ssubLinks, setSsubLinks] = useState([]);
     const [loading, setLoading] = useState(false)
 
-    const fetchSublinks = async() => {
-        try {
-            setLoading(true)
-            const result = await apiConnector("GET", categories.CATEGORIES_API);
-            console.log("Printing sublinks: ", result);
-            setSsubLinks(result.data.data);
-            setLoading(false)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect( () => {
-        setLoading(true)
-        fetchSublinks();
-        setLoading(false)
-    }, [] )
-
+    useEffect(() => {
+        ;(async () => {
+          setLoading(true)
+          try {
+            const res = await apiConnector("GET", categories.CATEGORIES_API)
+            setSsubLinks(res.data.data)
+          } catch (error) {
+            console.log("Could not fetch Categories.", error)
+          }
+          setLoading(false)
+        })()
+      }, [])
 
     const matchRoute = (route) => {
         return matchPath({path:route}, location.pathname);
@@ -75,9 +69,11 @@ const Navbar = () => {
                                                 </div>
                                                 {   loading ? (
                                                     <p className='text-center'>Loading...</p>
-                                                ) :
-                                                    ssubLinks.length ? (
-                                                        ssubLinks.map((ssubLink, index) => (
+                                                ) : ssubLinks.length ? (
+                                                    <>
+                                                    {
+                                                    ssubLinks?.filter((ssubLink) => ssubLink?.courses?.length > 0)
+                                                        ?.map((ssubLink, index) => (
                                                             <Link to={`/catalog/${ssubLink.name.split(" ").join("-").toLowerCase()}`} 
                                                             className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
                                                             key={index}>
@@ -85,9 +81,9 @@ const Navbar = () => {
                                                                     {ssubLink.name}
                                                                 </p>
                                                             </Link>
-                                                        ))
-                                                    ) : (<div className='text-center'>No courses Found</div>)
-                                                    
+                                                        ))}
+                                                    </>
+                                                    ) : (<p className='text-center'>No courses Found</p>)   
                                                 }
 
                                             </div>
