@@ -12,18 +12,18 @@ module.exports = {
       black: "#000",
       transparent: "#ffffff00",
       richblack: {
-        5: "#F1F2FF",
-        25: "#DBDDEA",
-        50: "#C5C7D4",
-        100: "#AFB2BF",
-        200: "#999DAA",
-        300: "#838894",
-        400: "#6E727F",
-        500: "#585D69",
-        600: "#424854",
-        700: "#2C333F",
-        800: "#161D29",
-        900: "#000814",
+        5: "#0A0B0E",      // Very dark text
+        25: "#1A1D22",
+        50: "#2A2D33",
+        100: "#3A3D44",     // Dark text
+        200: "#4A4E55",
+        300: "#5A5E66",
+        400: "#6A6E77",
+        500: "#7A7E88",     // Medium dark (for icons etc.)
+        600: "#9A9EA6",
+        700: "#BBC0C7",
+        800: "#DDE0E7",     // Light background sections
+        900: "#FFFFFF",     // Main white background
       },
       richblue: {
         5: "#ECF5FF",
@@ -53,7 +53,7 @@ module.exports = {
         800: "#022B32",
         900: "#001B1D",
       },
-      cyan:{
+      cyan: {
         5: "#1FA2FF",
         25: "#12D8FA",
         50: "#A6FFCB",
